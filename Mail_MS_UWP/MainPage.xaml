@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="Mail_MS_UWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:local="using:Mail_MS_UWP"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="Green" Margin="0,0,0,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Style="{x:Null}" Name="List" Background="#3817A8"  SelectionChanged="List_SelectionChanged" Margin="0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"  FontSize="25" FontWeight="Light" Foreground="#94FFFFFF" Margin="0"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView Grid.Column="1" x:Name="ListMes"  RelativePanel.RightOf="List">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WebView x:Name="webView" Width="600" Height="600" local:MyWebViewExtention.HtmlSource="{Binding HtmlBody}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
