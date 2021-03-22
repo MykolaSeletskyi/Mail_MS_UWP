@@ -7,6 +7,8 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -95,6 +97,98 @@ namespace Mail_MS_UWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        // ...
+        private void RootFrame_Navigated(object sender, NavigationEventArgs e)  
+{  
+    // Each time a navigation event occurs, update the Back button's visibility  
+    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =  
+        ((Frame)sender).CanGoBack ?  
+        AppViewBackButtonVisibility.Visible :  
+        AppViewBackButtonVisibility.Collapsed;  
+}  
+  
+private void OnBackRequested(object sender, BackRequestedEventArgs e)  
+{  
+    Frame rootFrame = Window.Current.Content as Frame;  
+  
+    if (rootFrame.CanGoBack)  
+    {  
+        e.Handled = true;  
+        rootFrame.GoBack();  
+    }  
+} 
+        // (Add these methods to the App class.)
+        public static bool TryGoBack()
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame.CanGoBack)
+            {
+                rootFrame.GoBack();
+                return true;
+            }
+            return false;
+        }
+
+        // Perform forward navigation if possible.
+        private bool TryGoForward()
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame.CanGoForward)
+            {
+                rootFrame.GoForward();
+                return true;
+            }
+            return false;
+        }
+
+        // Invoked on every keystroke, including system keys such as Alt key combinations.
+        // Used to detect keyboard navigation between pages even when the page itself
+        // doesn't have focus.
+        private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        {
+            // When Alt+Left are pressed navigate back.
+            // When Alt+Right are pressed navigate forward.
+            if (e.EventType == CoreAcceleratorKeyEventType.SystemKeyDown
+                && (e.VirtualKey == VirtualKey.Left || e.VirtualKey == VirtualKey.Right)
+                && e.KeyStatus.IsMenuKeyDown == true
+                && !e.Handled)
+            {
+                if (e.VirtualKey == VirtualKey.Left)
+                {
+                    e.Handled = TryGoBack();
+                }
+                else if (e.VirtualKey == VirtualKey.Right)
+                {
+                    e.Handled = TryGoForward();
+                }
+            }
+        }
+
+        // Handle system back requests.
+        private void System_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = TryGoBack();
+            }
+        }
+
+        // Handle mouse back button.
+        private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e)
+        {
+            // For this event, e.Handled arrives as 'true', so invert the value.
+            if (e.CurrentPoint.Properties.IsXButton1Pressed
+                && e.Handled)
+            {
+                e.Handled = !TryGoBack();
+            }
+            else if (e.CurrentPoint.Properties.IsXButton2Pressed
+                    && e.Handled)
+            {
+                e.Handled = !TryGoForward();
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Mail_MS_UWP.MailServices;
+﻿using Mail_MS_UWP.Model;
 using MailKit;
 using MimeKit;
 using System;
@@ -34,25 +34,15 @@ namespace Mail_MS_UWP
         {
             this.InitializeComponent();
             List.ItemsSource = mailReciever.GetFolders();
-
+            List.SelectedIndex = 0;
         }
 
         private void List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (List.SelectedItem != null)
-                ListMes.ItemsSource = mailReciever.GetMessages((IMailFolder) List.SelectedItem);
+                MyFrame.Navigate(typeof(ListMessages), mailReciever.GetMessages((IMailFolder)List.SelectedItem));
         }
+
     }
-    public class MyWebViewExtention
-    {
-        public static readonly DependencyProperty HtmlSourceProperty =
-               DependencyProperty.RegisterAttached("HtmlSource", typeof(string), typeof(MyWebViewExtention), new PropertyMetadata("", OnHtmlSourceChanged));
-        public static string GetHtmlSource(DependencyObject obj) { return (string)obj.GetValue(HtmlSourceProperty); }
-        public static void SetHtmlSource(DependencyObject obj, string value) { obj.SetValue(HtmlSourceProperty, value); }
-        private static void OnHtmlSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            WebView webView = d as WebView;
-                webView?.NavigateToString((string)e.NewValue);
-        }
-    }
+  
 }

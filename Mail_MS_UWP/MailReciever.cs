@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace Mail_MS_UWP.MailServices
+namespace Mail_MS_UWP.Model
 {
    public class MailReciever
     {
@@ -19,7 +18,7 @@ namespace Mail_MS_UWP.MailServices
         }
         public IList<IMailFolder> GetFolders()
         {
-            return imapClient.GetFolders(imapClient.PersonalNamespaces[0]);
+            return imapClient.GetFolders(imapClient.PersonalNamespaces[0]).Skip(2).ToList();
         }
         public IList<MimeMessage> GetMessages(IMailFolder folder)
         {

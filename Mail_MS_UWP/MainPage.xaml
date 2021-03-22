@@ -19,12 +19,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView Grid.Column="1" x:Name="ListMes"  RelativePanel.RightOf="List">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <WebView x:Name="webView" Width="600" Height="600" local:MyWebViewExtention.HtmlSource="{Binding HtmlBody}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Frame x:Name="MyFrame" Grid.Column="1"/>
+
     </Grid>
 </Page>
