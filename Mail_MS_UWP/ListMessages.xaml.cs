@@ -26,6 +26,7 @@ namespace Mail_MS_UWP
         public ListMessages()
         {
             this.InitializeComponent();
+            MimeMessage a;
         }
         private void ListMes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

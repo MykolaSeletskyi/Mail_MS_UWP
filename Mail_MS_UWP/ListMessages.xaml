@@ -8,16 +8,20 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <ListView Grid.Column="1" x:Name="ListMes"  RelativePanel.RightOf="List" SelectionChanged="ListMes_SelectionChanged" HorizontalContentAlignment="Stretch" Background="Green">
+    <ListView Grid.Column="1" x:Name="ListMes"  RelativePanel.RightOf="List" SelectionChanged="ListMes_SelectionChanged" HorizontalContentAlignment="Stretch" >
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
+            </Style>
+        </ListView.ItemContainerStyle>
         <ListView.ItemTemplate>
             <DataTemplate>
-                <StackPanel Orientation="Horizontal" Background="Aqua" HorizontalAlignment="Stretch" >
-                    <TextBlock Text="{Binding From}" FontSize="12" Foreground="Gray" Margin="0,5"/>
-                    <TextBlock Text="{Binding Subject}" FontSize="15" FontWeight="SemiBold" Margin="15,5" HorizontalAlignment="Center"/>
-                    <TextBlock Foreground="Red" HorizontalAlignment="Right" Text="{Binding Body.ContentType.MimeType}" FontSize="15" FontWeight="SemiBold" Margin="15,5"/>
-                </StackPanel>
+                <RelativePanel   HorizontalAlignment="Stretch" >
+                    <TextBlock RelativePanel.AlignLeftWithPanel="True" x:Name="From" Text="{Binding From}" FontSize="12" Foreground="Gray" Margin="0,5"/>
+                    <TextBlock RelativePanel.RightOf="From" RelativePanel.LeftOf="MimeType" Text="{Binding Subject}" FontSize="15" FontWeight="SemiBold" Margin="15,5" HorizontalAlignment="Center"/>
+                    <TextBlock RelativePanel.AlignRightWithPanel="True" x:Name="MimeType" Foreground="Red" HorizontalAlignment="Right" Text="{Binding Body.ContentType.MimeType}" FontSize="15" FontWeight="SemiBold" Margin="15,5"/>
+                </RelativePanel>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
-
 </Page>

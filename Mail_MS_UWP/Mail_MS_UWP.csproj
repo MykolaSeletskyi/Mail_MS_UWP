@@ -129,6 +129,9 @@
     <Compile Include="MessageHtml.xaml.cs">
       <DependentUpon>MessageHtml.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MessageMixed.xaml.cs">
+      <DependentUpon>MessageMixed.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MessageText.xaml.cs">
       <DependentUpon>MessageText.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MessageHtml.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MessageMixed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

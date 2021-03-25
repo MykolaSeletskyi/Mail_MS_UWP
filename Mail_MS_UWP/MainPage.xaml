@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid Background="Green" Margin="0,0,0,10">
+    <Grid Margin="0,0,0,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
@@ -20,6 +20,5 @@
             </ListView.ItemTemplate>
         </ListView>
         <Frame x:Name="MyFrame" Grid.Column="1"/>
-
     </Grid>
 </Page>
